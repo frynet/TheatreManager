@@ -1,4 +1,4 @@
-package com.frynet
+package com.frynet.theatre
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

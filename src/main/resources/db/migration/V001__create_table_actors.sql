@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS actors
+(
+    id   SERIAL       NOT NULL
+        CONSTRAINT k1 PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
