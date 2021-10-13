@@ -53,4 +53,14 @@ class ActorController {
     fun deleteAllActors() {
         actorService.deleteAll()
     }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "update actor by ID")
+    @ResponseBody
+    fun updateActorById(
+        @PathVariable id: Long,
+        @RequestBody actor: ActorCreate
+    ): ActorInfo {
+        return actorService.updateActor(id, actor)
+    }
 }

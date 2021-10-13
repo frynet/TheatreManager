@@ -22,6 +22,9 @@ interface ActorClient {
     @PostMapping
     fun addActor(@RequestBody actor: ActorCreate): ActorInfo
 
+    @PutMapping("/{id}")
+    fun updateActor(@PathVariable id: Long, actor: ActorCreate): ActorInfo
+
     @DeleteMapping
     fun deleteAllActors()
 

@@ -3,6 +3,7 @@ package tests
 import clients.ActorClient
 import com.frynet.theatre.actors.ActorConverter
 import com.frynet.theatre.actors.ActorCreate
+import com.frynet.theatre.actors.ActorInfo
 import config.FeignConfiguration
 import feign.FeignException
 import io.kotest.assertions.throwables.shouldNotThrowAny
@@ -13,6 +14,7 @@ import io.kotest.extensions.spring.SpringExtension
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldNotContain
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldContain
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -41,6 +43,8 @@ class ActorTest : StringSpec() {
 
     @Autowired
     private lateinit var actorConverter: ActorConverter
+
+    private lateinit var actor: ActorInfo
 
     init {
         "Try to get non-exist actor" {
@@ -71,18 +75,8 @@ class ActorTest : StringSpec() {
             response.map { actorConverter.toCreate(it) } shouldContainAll actors
         }
 
-        "Delete actor by ID" {
-            val actor = actorClient.getAllActors().random()
-
-            shouldNotThrowAny {
-                actorClient.deleteActor(actor.id)
-            }
-
-            actorClient.getAllActors() shouldNotContain actor
-        }
-
         "Get actor by ID" {
-            val actor = actorClient.getAllActors().random()
+            actor = actorClient.getAllActors().random()
 
             val response = shouldNotThrowAny {
                 actorClient.getActorById(actor.id)
@@ -90,6 +84,30 @@ class ActorTest : StringSpec() {
 
             response.id shouldBe actor.id
             response.name shouldBe actor.name
+        }
+
+        "Update actor by ID" {
+            shouldNotThrowAny {
+                actorClient.updateActor(actor.id, ActorCreate("Olga"))
+            }
+
+            val response = shouldNotThrowAny {
+                actorClient.getActorById(actor.id)
+            }
+
+            response.id shouldBe actor.id
+            response.name shouldNotBe actor.name
+            response.name shouldBe "Olga"
+        }
+
+        "Delete actor by ID" {
+            actor = actorClient.getAllActors().random()
+
+            shouldNotThrowAny {
+                actorClient.deleteActor(actor.id)
+            }
+
+            actorClient.getAllActors() shouldNotContain actor
         }
     }
 

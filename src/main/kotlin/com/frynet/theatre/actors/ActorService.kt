@@ -39,6 +39,18 @@ class ActorService {
         )
     }
 
+    fun updateActor(id: Long, actor: ActorCreate): ActorInfo {
+        val a = actorRepository.findById(id)
+
+        if (a.isEmpty) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The actor with id=$id not found")
+        }
+
+        a.get().name = actor.name
+
+        return actorConverter.toInfo(actorRepository.save(a.get()))
+    }
+
     fun deleteActorById(id: Long) {
         val actor = actorRepository.findById(id)
 
