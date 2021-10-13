@@ -1,0 +1,6 @@
+CREATE TABLE roless
+(
+    id    SERIAL       NOT NULL
+        CONSTRAINT k2 PRIMARY KEY,
+    title VARCHAR(100) NOT NULL
+);
