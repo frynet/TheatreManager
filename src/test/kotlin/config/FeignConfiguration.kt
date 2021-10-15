@@ -1,9 +1,6 @@
 package config
 
-import clients.ActorClient
-import clients.RoleClient
-import clients.SpecRoleClient
-import clients.SpectacleClient
+import clients.*
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.context.annotation.Configuration
@@ -15,6 +12,7 @@ import org.springframework.context.annotation.Configuration
         RoleClient::class,
         SpectacleClient::class,
         SpecRoleClient::class,
+        SpecActorClient::class,
     ]
 )
 @Configuration
