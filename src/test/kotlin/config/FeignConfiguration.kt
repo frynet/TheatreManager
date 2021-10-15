@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration
         SpectacleClient::class,
         SpecRoleClient::class,
         SpecActorClient::class,
+        SpecRoleActorClient::class,
     ]
 )
 @Configuration
