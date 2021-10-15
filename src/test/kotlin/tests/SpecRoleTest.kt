@@ -3,9 +3,7 @@ package tests
 import clients.RoleClient
 import clients.SpecRoleClient
 import clients.SpectacleClient
-import com.frynet.theatre.roles.RoleCreate
 import com.frynet.theatre.roles.RoleInfo
-import com.frynet.theatre.spectacles.SpectacleCreate
 import com.frynet.theatre.spectacles.SpectacleInfo
 import com.frynet.theatre.spectacles_roles.SpecRoleInfo
 import config.FeignConfiguration
@@ -56,16 +54,16 @@ class SpecRoleTest : StringSpec() {
     override fun beforeSpec(spec: Spec) {
         val count = Random.nextInt(4, 10)
 
-        generateSpectacles(count).forEach(spectacleClient::addSpectacle)
+        Generate.spectacles(count).forEach(spectacleClient::addSpectacle)
         spectacles = spectacleClient.getAllSpectacles()
 
-        generateRoles(count).forEach(roleClient::addRole)
+        Generate.roles(count).forEach(roleClient::addRole)
         roles = roleClient.getAllRoles()
     }
 
     init {
         "Try to add role when spectacle doesn't exists" {
-            val specId = getNotContained(spectacles.map { it.id })
+            val specId = Generate.notContained(spectacles.map { it.id })
 
             val ex = shouldThrow<FeignException.BadRequest> {
                 specRoleClient.addRoleToSpec(specId, SpecRoleInfo(roles.random().id, true))
@@ -77,7 +75,7 @@ class SpecRoleTest : StringSpec() {
 
         "Try to add role when role doesn't exists" {
             val s = spectacles.random()
-            val roleId = getNotContained(roles.map { it.id })
+            val roleId = Generate.notContained(roles.map { it.id })
             val info = SpecRoleInfo(roleId, true)
 
             val ex = shouldThrow<FeignException.BadRequest> {
@@ -140,36 +138,6 @@ class SpecRoleTest : StringSpec() {
 
             specRoleClient.getAllRolesInSpec(specId) shouldNotContain role
         }
-    }
-
-    private fun getNotContained(list: List<Long>): Long {
-        var result = list.first()
-
-        while (list.contains(result)) {
-            result++
-        }
-
-        return result
-    }
-
-    private fun generateRoles(count: Int): List<RoleCreate> {
-        val result = mutableListOf<RoleCreate>()
-
-        for (i in 0 until count) {
-            result.add(RoleCreate(Generate.randomWord(Random.nextInt(4, 10))))
-        }
-
-        return result
-    }
-
-    private fun generateSpectacles(count: Int): List<SpectacleCreate> {
-        val result = mutableListOf<SpectacleCreate>()
-
-        for (i in 0 until count) {
-            result.add(SpectacleCreate(Generate.randomWord(Random.nextInt(4, 10))))
-        }
-
-        return result
     }
 
     override fun afterSpec(spec: Spec) {

@@ -61,7 +61,7 @@ class ActorTest : StringSpec() {
         }
 
         "Add some actors" {
-            val actors = generateActors(Random.nextInt(4, 10))
+            val actors = Generate.actors(Random.nextInt(4, 10))
 
             actors.forEach {
                 shouldNotThrowAny {
@@ -109,16 +109,6 @@ class ActorTest : StringSpec() {
 
             actorClient.getAllActors() shouldNotContain actor
         }
-    }
-
-    private fun generateActors(count: Int): List<ActorCreate> {
-        val result = mutableListOf<ActorCreate>()
-
-        for (i in 0 until count) {
-            result.add(ActorCreate(Generate.randomWord(Random.nextInt(4, 10))))
-        }
-
-        return result
     }
 
     override fun afterSpec(spec: Spec) {

@@ -61,7 +61,7 @@ class SpectacleTest : StringSpec() {
         }
 
         "Add some spectacles" {
-            val spectacles = generateSpectacles(Random.nextInt(4, 10))
+            val spectacles = Generate.spectacles(Random.nextInt(4, 10))
 
             spectacles.forEach {
                 shouldNotThrowAny {
@@ -109,16 +109,6 @@ class SpectacleTest : StringSpec() {
 
             spectacleClient.getAllSpectacles() shouldNotContain spectacle
         }
-    }
-
-    private fun generateSpectacles(count: Int): List<SpectacleCreate> {
-        val result = mutableListOf<SpectacleCreate>()
-
-        for (i in 0 until count) {
-            result.add(SpectacleCreate(Generate.randomWord(Random.nextInt(4, 10))))
-        }
-
-        return result
     }
 
     override fun afterSpec(spec: Spec) {

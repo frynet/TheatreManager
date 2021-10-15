@@ -60,7 +60,7 @@ class RoleTest : StringSpec() {
         }
 
         "Add some roles" {
-            val roles = generateRoles(Random.nextInt(4, 10))
+            val roles = Generate.roles(Random.nextInt(4, 10))
 
             roles.forEach {
                 shouldNotThrowAny {
@@ -106,16 +106,6 @@ class RoleTest : StringSpec() {
 
             roleClient.getAllRoles() shouldNotContain role
         }
-    }
-
-    private fun generateRoles(count: Int): List<RoleCreate> {
-        val result = mutableListOf<RoleCreate>()
-
-        for (i in 0 until count) {
-            result.add(RoleCreate(Generate.randomWord(Random.nextInt(4, 10))))
-        }
-
-        return result
     }
 
     override fun afterSpec(spec: Spec) {
