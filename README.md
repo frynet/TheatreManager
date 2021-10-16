@@ -1,4 +1,4 @@
-# BACHELOR COURSEWORK: REMASTERED. PART 1: BACK-END.
+# <h1>BACHELOR COURSEWORK: REMASTERED.<br/>PART 1: BACK-END.</h1>
 
 ## Некоторые определения из мира театрального искусства:
 
