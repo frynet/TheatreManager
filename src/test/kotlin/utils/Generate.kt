@@ -64,7 +64,7 @@ class Generate {
             var element = list.first()
 
             for (i in 0 until count) {
-                while (list.contains(element) && result.contains(element)) {
+                while (list.contains(element) || result.contains(element)) {
                     element++
                 }
 
