@@ -16,18 +16,22 @@ class SpectacleService {
     @Autowired
     private lateinit var spectacleConverter: SpectacleConverter
 
+    private fun getIfExists(id: Long): SpectacleEntity {
+        val spectacle = spectacleRepository.findById(id)
+
+        if (spectacle.isEmpty) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Spectacle.notFound(id))
+        }
+
+        return spectacle.get()
+    }
+
     fun getAll(): List<SpectacleInfo> {
         return spectacleRepository.findAll().map { spectacleConverter.toInfo(it) }
     }
 
     fun getById(id: Long): SpectacleInfo {
-        val s = spectacleRepository.findById(id)
-
-        if (s.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Spectacle.notFound(id))
-        }
-
-        return spectacleConverter.toInfo(s.get())
+        return spectacleConverter.toInfo(getIfExists(id))
     }
 
     fun add(spec: SpectacleCreate): SpectacleInfo {
@@ -41,25 +45,15 @@ class SpectacleService {
     }
 
     fun updateById(id: Long, spec: SpectacleCreate): SpectacleInfo {
-        val s = spectacleRepository.findById(id)
+        val s = getIfExists(id)
 
-        if (s.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Spectacle.notFound(id))
-        }
+        s.title = spec.title
 
-        s.get().title = spec.title
-
-        return spectacleConverter.toInfo(spectacleRepository.save(s.get()))
+        return spectacleConverter.toInfo(spectacleRepository.save(s))
     }
 
     fun deleteById(id: Long) {
-        val s = spectacleRepository.findById(id)
-
-        if (s.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Spectacle.notFound(id))
-        }
-
-        spectacleRepository.delete(s.get())
+        spectacleRepository.delete(getIfExists(id))
     }
 
     fun deleteAll() {

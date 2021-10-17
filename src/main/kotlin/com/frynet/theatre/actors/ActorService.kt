@@ -16,18 +16,22 @@ class ActorService {
     @Autowired
     private lateinit var actorConverter: ActorConverter
 
-    fun getAllActors(): List<ActorInfo> {
-        return actorRepository.findAll().map { actorConverter.toInfo(it) }
-    }
-
-    fun getActorById(id: Long): ActorInfo {
+    private fun getIfExists(id: Long): ActorEntity {
         val actor = actorRepository.findById(id)
 
         if (actor.isEmpty) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, Actor.notFound(id))
         }
 
-        return actorConverter.toInfo(actor.get())
+        return actor.get()
+    }
+
+    fun getAllActors(): List<ActorInfo> {
+        return actorRepository.findAll().map { actorConverter.toInfo(it) }
+    }
+
+    fun getActorById(id: Long): ActorInfo {
+        return actorConverter.toInfo(getIfExists(id))
     }
 
     fun addActor(actor: ActorCreate): ActorInfo {
@@ -41,25 +45,15 @@ class ActorService {
     }
 
     fun updateActor(id: Long, actor: ActorCreate): ActorInfo {
-        val a = actorRepository.findById(id)
+        val a = getIfExists(id)
 
-        if (a.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Actor.notFound(id))
-        }
+        a.name = actor.name
 
-        a.get().name = actor.name
-
-        return actorConverter.toInfo(actorRepository.save(a.get()))
+        return actorConverter.toInfo(actorRepository.save(a))
     }
 
     fun deleteActorById(id: Long) {
-        val actor = actorRepository.findById(id)
-
-        if (actor.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Actor.notFound(id))
-        }
-
-        actorRepository.deleteById(id)
+        actorRepository.delete(getIfExists(id))
     }
 
     fun deleteAll() {

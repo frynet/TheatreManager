@@ -16,18 +16,22 @@ class RoleService {
     @Autowired
     private lateinit var roleConverter: RoleConverter
 
-    fun getAllRoles(): List<RoleInfo> {
-        return roleRepository.findAll().map { roleConverter.toInfo(it) }
-    }
-
-    fun getRoleById(id: Long): RoleInfo {
+    private fun getIfExists(id: Long): RoleEntity {
         val role = roleRepository.findById(id)
 
         if (role.isEmpty) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, Role.notFound(id))
         }
 
-        return roleConverter.toInfo(role.get())
+        return role.get()
+    }
+
+    fun getAllRoles(): List<RoleInfo> {
+        return roleRepository.findAll().map { roleConverter.toInfo(it) }
+    }
+
+    fun getRoleById(id: Long): RoleInfo {
+        return roleConverter.toInfo(getIfExists(id))
     }
 
     fun addRole(role: RoleCreate): RoleInfo {
@@ -41,13 +45,7 @@ class RoleService {
     }
 
     fun deleteRoleById(id: Long) {
-        val role = roleRepository.findById(id)
-
-        if (role.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Role.notFound(id))
-        }
-
-        roleRepository.deleteById(id)
+        roleRepository.delete(getIfExists(id))
     }
 
     fun deleteAll() {
@@ -55,14 +53,10 @@ class RoleService {
     }
 
     fun updateRole(id: Long, role: RoleCreate): RoleInfo {
-        val r = roleRepository.findById(id)
+        val r = getIfExists(id)
 
-        if (r.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Role.notFound(id))
-        }
+        r.title = role.title
 
-        r.get().title = role.title
-
-        return roleConverter.toInfo(roleRepository.save(r.get()))
+        return roleConverter.toInfo(roleRepository.save(r))
     }
 }
