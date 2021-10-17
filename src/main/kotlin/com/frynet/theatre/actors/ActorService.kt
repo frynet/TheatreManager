@@ -1,5 +1,6 @@
 package com.frynet.theatre.actors
 
+import com.frynet.theatre.errors.Actor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -23,7 +24,7 @@ class ActorService {
         val actor = actorRepository.findById(id)
 
         if (actor.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The actor with id=$id not found")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Actor.notFound(id))
         }
 
         return actorConverter.toInfo(actor.get())
@@ -31,7 +32,7 @@ class ActorService {
 
     fun addActor(actor: ActorCreate): ActorInfo {
         if (actorRepository.existsByName(actor.name)) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The actor ${actor.name} already exist")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Actor.alreadyExist(actor.name))
         }
 
         return actorConverter.toInfo(
@@ -43,7 +44,7 @@ class ActorService {
         val a = actorRepository.findById(id)
 
         if (a.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The actor with id=$id not found")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Actor.notFound(id))
         }
 
         a.get().name = actor.name
@@ -55,7 +56,7 @@ class ActorService {
         val actor = actorRepository.findById(id)
 
         if (actor.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The actor with id=$id not found")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Actor.notFound(id))
         }
 
         actorRepository.deleteById(id)

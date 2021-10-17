@@ -1,6 +1,7 @@
 package tests
 
 import clients.RoleClient
+import com.frynet.theatre.errors.Role
 import com.frynet.theatre.roles.RoleConverter
 import com.frynet.theatre.roles.RoleCreate
 import com.frynet.theatre.roles.RoleInfo
@@ -54,9 +55,7 @@ class RoleTest : StringSpec() {
             }
 
             ex.status() shouldBe HttpStatus.BAD_REQUEST.value()
-            ex.message?.let {
-                it shouldContain "The role with id=$id not found"
-            }
+            ex.message?.let { it shouldContain Role.notFound(id) }
         }
 
         "Add some roles" {

@@ -1,6 +1,7 @@
 package tests
 
 import clients.SpectacleClient
+import com.frynet.theatre.errors.Spectacle
 import com.frynet.theatre.spectacles.SpectacleConverter
 import com.frynet.theatre.spectacles.SpectacleCreate
 import com.frynet.theatre.spectacles.SpectacleInfo
@@ -55,9 +56,7 @@ class SpectacleTest : StringSpec() {
             }
 
             ex.status() shouldBe HttpStatus.BAD_REQUEST.value()
-            ex.message?.let {
-                it shouldContain "The spectacle with id=$id not found"
-            }
+            ex.message?.let { it shouldContain Spectacle.notFound(id) }
         }
 
         "Add some spectacles" {

@@ -1,6 +1,7 @@
 package com.frynet.theatre.spectacles_actors
 
 import com.frynet.theatre.actors.ActorService
+import com.frynet.theatre.errors.SpectacleActor
 import com.frynet.theatre.spectacles.SpectacleService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -48,7 +49,7 @@ class SpecActorService {
         if (specActorRepository.existsById(id)) {
             specActorRepository.deleteById(id)
         } else {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The record with id=($specId, $actorId) not found")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, SpectacleActor.notFound(id))
         }
     }
 

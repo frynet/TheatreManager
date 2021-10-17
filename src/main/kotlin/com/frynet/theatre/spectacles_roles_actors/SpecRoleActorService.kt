@@ -1,6 +1,7 @@
 package com.frynet.theatre.spectacles_roles_actors
 
 import com.frynet.theatre.actors.ActorService
+import com.frynet.theatre.errors.SpectacleRoleActor
 import com.frynet.theatre.roles.RoleInfo
 import com.frynet.theatre.roles.RoleService
 import com.frynet.theatre.spectacles.SpectacleService
@@ -45,13 +46,13 @@ class SpecRoleActorService {
         val id = SpecRoleActorId(specId, roleId, actorId)
 
         if (!specRoleActorRepo.existsById(id)) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The record with id=$id doesn't exist")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, SpectacleRoleActor.notFound(id))
         }
 
         id.role = role.id
 
         if (specRoleActorRepo.existsById(id)) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Actor already have that role")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, SpectacleRoleActor.alreadyExist(id))
         }
 
         specRoleActorRepo.save(SpecRoleActorEntity(id))
@@ -71,7 +72,7 @@ class SpecRoleActorService {
                 id.role = it.id
 
                 if (specRoleActorRepo.existsById(id)) {
-                    throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The record with id=$id already exist")
+                    throw ResponseStatusException(HttpStatus.BAD_REQUEST, SpectacleRoleActor.alreadyExist(id))
                 }
 
                 specRoleActorRepo.save(SpecRoleActorEntity(id))

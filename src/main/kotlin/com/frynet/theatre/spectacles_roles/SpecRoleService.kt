@@ -1,5 +1,6 @@
 package com.frynet.theatre.spectacles_roles
 
+import com.frynet.theatre.errors.SpectacleRole
 import com.frynet.theatre.roles.RoleService
 import com.frynet.theatre.spectacles.SpectacleService
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,7 +28,7 @@ class SpecRoleService {
         val entity = specRoleRepo.findById(id)
 
         if (entity.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, SpectacleRole.notFound(id))
         }
 
         return entity.get()

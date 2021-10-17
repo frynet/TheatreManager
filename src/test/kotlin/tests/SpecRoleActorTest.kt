@@ -2,6 +2,8 @@ package tests
 
 import clients.*
 import com.frynet.theatre.actors.ActorInfo
+import com.frynet.theatre.errors.Actor
+import com.frynet.theatre.errors.Spectacle
 import com.frynet.theatre.roles.RoleInfo
 import com.frynet.theatre.spectacles.SpectacleInfo
 import com.frynet.theatre.spectacles_roles.SpecRoleInfo
@@ -93,7 +95,7 @@ class SpecRoleActorTest : StringSpec() {
             }
 
             ex.status() shouldBe HttpStatus.BAD_REQUEST.value()
-            ex.message shouldContain "The spectacle with id=$specId not found"
+            ex.message shouldContain Spectacle.notFound(specId)
         }
 
         "Try to add role for non-exist actor" {
@@ -105,7 +107,7 @@ class SpecRoleActorTest : StringSpec() {
             }
 
             ex.status() shouldBe HttpStatus.BAD_REQUEST.value()
-            ex.message shouldContain "The actor with id=$actorId not found"
+            ex.message shouldContain Actor.notFound(actorId)
         }
 
         "Add some roles for actor" {

@@ -4,6 +4,7 @@ import clients.ActorClient
 import com.frynet.theatre.actors.ActorConverter
 import com.frynet.theatre.actors.ActorCreate
 import com.frynet.theatre.actors.ActorInfo
+import com.frynet.theatre.errors.Actor
 import config.FeignConfiguration
 import feign.FeignException
 import io.kotest.assertions.throwables.shouldNotThrowAny
@@ -55,9 +56,7 @@ class ActorTest : StringSpec() {
             }
 
             ex.status() shouldBe HttpStatus.BAD_REQUEST.value()
-            ex.message?.let {
-                it shouldContain "The actor with id=$id not found"
-            }
+            ex.message?.let { it shouldContain Actor.notFound(id) }
         }
 
         "Add some actors" {

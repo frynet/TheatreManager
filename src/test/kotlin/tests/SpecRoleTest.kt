@@ -3,8 +3,12 @@ package tests
 import clients.RoleClient
 import clients.SpecRoleClient
 import clients.SpectacleClient
+import com.frynet.theatre.errors.Role
+import com.frynet.theatre.errors.Spectacle
+import com.frynet.theatre.errors.SpectacleRole
 import com.frynet.theatre.roles.RoleInfo
 import com.frynet.theatre.spectacles.SpectacleInfo
+import com.frynet.theatre.spectacles_roles.SpecRoleId
 import com.frynet.theatre.spectacles_roles.SpecRoleInfo
 import config.FeignConfiguration
 import feign.FeignException
@@ -70,7 +74,7 @@ class SpecRoleTest : StringSpec() {
             }
 
             ex.status() shouldBe HttpStatus.BAD_REQUEST.value()
-            ex.message shouldContain "The spectacle with id=$specId not found"
+            ex.message shouldContain Spectacle.notFound(specId)
         }
 
         "Try to add role when role doesn't exists" {
@@ -83,19 +87,18 @@ class SpecRoleTest : StringSpec() {
             }
 
             ex.status() shouldBe HttpStatus.BAD_REQUEST.value()
-            ex.message shouldContain "The role with id=$roleId not found"
+            ex.message shouldContain Role.notFound(roleId)
         }
 
         "Try to get non-exists record" {
-            val specId = 0L
-            val roleId = 0L
+            val id = SpecRoleId(specId, 0L)
 
             val ex = shouldThrow<FeignException.BadRequest> {
-                specRoleClient.getRoleInfo(specId, roleId)
+                specRoleClient.getRoleInfo(id.spectacle, id.role)
             }
 
             ex.status() shouldBe HttpStatus.BAD_REQUEST.value()
-            ex.message shouldContain "Not found"
+            ex.message shouldContain SpectacleRole.notFound(id)
         }
 
         "Add some records" {

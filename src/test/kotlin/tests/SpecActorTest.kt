@@ -4,6 +4,7 @@ import clients.ActorClient
 import clients.SpecActorClient
 import clients.SpectacleClient
 import com.frynet.theatre.actors.ActorInfo
+import com.frynet.theatre.errors.Spectacle
 import com.frynet.theatre.spectacles.SpectacleInfo
 import config.FeignConfiguration
 import feign.FeignException
@@ -69,7 +70,7 @@ class SpecActorTest : StringSpec() {
             }
 
             ex.status() shouldBe HttpStatus.BAD_REQUEST.value()
-            ex.message shouldContain "The spectacle with id=$specId not found"
+            ex.message shouldContain Spectacle.notFound(specId)
         }
 
         "Add some actors" {

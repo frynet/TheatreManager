@@ -1,5 +1,6 @@
 package com.frynet.theatre.spectacles
 
+import com.frynet.theatre.errors.Spectacle
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -23,7 +24,7 @@ class SpectacleService {
         val s = spectacleRepository.findById(id)
 
         if (s.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The spectacle with id=$id not found")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Spectacle.notFound(id))
         }
 
         return spectacleConverter.toInfo(s.get())
@@ -31,10 +32,7 @@ class SpectacleService {
 
     fun add(spec: SpectacleCreate): SpectacleInfo {
         if (spectacleRepository.existsByTitle(spec.title)) {
-            throw ResponseStatusException(
-                HttpStatus.BAD_REQUEST,
-                "The spectacle with title ${spec.title} already exists"
-            )
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Spectacle.alreadyExist(spec.title))
         }
 
         return spectacleConverter.toInfo(
@@ -46,7 +44,7 @@ class SpectacleService {
         val s = spectacleRepository.findById(id)
 
         if (s.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The spectacle with id=$id not found")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Spectacle.notFound(id))
         }
 
         s.get().title = spec.title
@@ -58,7 +56,7 @@ class SpectacleService {
         val s = spectacleRepository.findById(id)
 
         if (s.isEmpty) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The spectacle with id=$id not found")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Spectacle.notFound(id))
         }
 
         spectacleRepository.delete(s.get())
