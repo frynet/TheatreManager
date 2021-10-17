@@ -38,7 +38,7 @@ class SpecRoleActorService {
     }
 
     fun getActorsByRole(specId: Long, roleId: Long): List<Long> {
-        return specRoleActorRepo.findActorsByRole(specId, roleId).map { it.id.role }
+        return specRoleActorRepo.findActorsByRole(specId, roleId).map { it.id.actor }
     }
 
     fun changeRoleForActor(specId: Long, roleId: Long, actorId: Long, role: RoleInfo) {
