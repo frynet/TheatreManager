@@ -1,9 +1,12 @@
 package utils
 
 import com.frynet.theatre.actors.ActorCreate
+import com.frynet.theatre.repertoires.RepertoireInfo
 import com.frynet.theatre.roles.RoleCreate
 import com.frynet.theatre.roles.RoleInfo
 import com.frynet.theatre.spectacles.SpectacleCreate
+import com.frynet.theatre.spectacles.SpectacleInfo
+import java.time.LocalDate
 import kotlin.random.Random
 
 class Generate {
@@ -80,6 +83,38 @@ class Generate {
 
             rolesIds.forEach {
                 result.add(RoleInfo(it, randomWord(3)))
+            }
+
+            return result
+        }
+
+        fun repertoires(spectacles: List<SpectacleInfo>, count: Int): List<RepertoireInfo> {
+            val after = datesAfter(LocalDate.now(), count)
+            val before = datesBefore(LocalDate.now(), count)
+            val result = mutableListOf<RepertoireInfo>()
+
+            repeat(count) {
+                result.add(RepertoireInfo(spectacles.random().id, (after + before).random()))
+            }
+
+            return result
+        }
+
+        fun datesAfter(date: LocalDate, count: Int = 1): List<LocalDate> {
+            val result = mutableListOf<LocalDate>()
+
+            repeat(count) {
+                result.add(date.plusDays(Random.nextLong(4, 356)))
+            }
+
+            return result
+        }
+
+        fun datesBefore(date: LocalDate, count: Int = 1): List<LocalDate> {
+            val result = mutableListOf<LocalDate>()
+
+            repeat(count) {
+                result.add(date.minusDays(Random.nextLong(4, 356)))
             }
 
             return result

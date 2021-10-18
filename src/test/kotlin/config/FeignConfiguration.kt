@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration
         SpecRoleClient::class,
         SpecActorClient::class,
         SpecRoleActorClient::class,
+        RepertoireClient::class,
     ]
 )
 @Configuration
