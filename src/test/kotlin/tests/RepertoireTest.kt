@@ -113,9 +113,12 @@ class RepertoireTest : StringSpec() {
                 begin = groupedRepertoires.keys.last(), end = groupedRepertoires.keys.first()
             )
 
-            shouldThrow<BadRequest> {
+            val ex = shouldThrow<BadRequest> {
                 repertoireClient.getSpectaclesByInterval(interval)
             }
+
+            ex.status() shouldBe HttpStatus.BAD_REQUEST.value()
+            ex.message shouldContain Repertoire.invalidDateInterval(interval)
         }
 
         "Try to get spectacles by valid interval" {
