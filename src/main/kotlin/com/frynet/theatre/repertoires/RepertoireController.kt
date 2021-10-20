@@ -19,6 +19,17 @@ class RepertoireController {
     private lateinit var repertoireService: RepertoireService
 
     @PostMapping(
+        path = ["/scheduled"],
+        consumes = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    @Operation(summary = "запланирован ли спектакль на определённую дату")
+    @ResponseBody
+    fun isScheduled(@RequestBody info: RepertoireInfo): Boolean {
+        return repertoireService.isScheduled(info)
+    }
+
+    @PostMapping(
         path = ["/date"],
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]

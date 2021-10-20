@@ -99,6 +99,10 @@ class RepertoireTest : StringSpec() {
             }
         }
 
+        "Is it schedule? (For scheduled spectacle)" {
+            repertoireClient.isScheduled(repertoires.random()) shouldBe true
+        }
+
         "Try to get spectacles by date" {
             val date = groupedRepertoires.keys.random()
 

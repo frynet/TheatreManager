@@ -36,6 +36,18 @@ class RepertoireService {
             .groupBy { it.date }
     }
 
+    fun isScheduled(info: RepertoireInfo): Boolean {
+        spectacleService.getById(info.specId)
+
+        val id = RepertoireId(info.specId, info.date)
+
+        if (!repertoireRepository.existsById(id)) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Repertoire.notScheduled(info))
+        }
+
+        return true
+    }
+
     fun scheduleSpectacle(info: RepertoireInfo) {
         spectacleService.getById(info.specId)
 

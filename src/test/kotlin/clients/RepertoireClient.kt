@@ -24,6 +24,9 @@ interface RepertoireClient {
     @PostMapping("/interval")
     fun getSpectaclesByInterval(@RequestBody interval: RepertoireDateInterval): Map<LocalDate, List<RepertoireInfo>>
 
+    @PostMapping("/scheduled")
+    fun isScheduled(@RequestBody info: RepertoireInfo): Boolean
+
     @PostMapping
     fun scheduleSpectacle(@RequestBody info: RepertoireInfo)
 
