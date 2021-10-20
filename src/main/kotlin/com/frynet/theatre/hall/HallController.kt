@@ -17,6 +17,17 @@ class HallController {
     @Autowired
     private lateinit var hallService: HallService
 
+    @PostMapping(
+        path = ["/contains"],
+        consumes = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    @Operation(summary = "узнать, есть ли такое место в зале")
+    @ResponseBody
+    fun contains(@RequestBody place: HallPlace): Boolean {
+        return hallService.contains(place)
+    }
+
     @GetMapping(
         path = ["/size"],
         produces = [MediaType.APPLICATION_JSON_VALUE]

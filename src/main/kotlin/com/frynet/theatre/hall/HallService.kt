@@ -38,6 +38,10 @@ class HallService {
         }
     }
 
+    fun contains(place: HallPlace): Boolean {
+        return contains(place, getHallSize())
+    }
+
     fun getHallSize(): HallSize {
         return HallSize(
             hallRepository.findMaxRow() ?: 0,

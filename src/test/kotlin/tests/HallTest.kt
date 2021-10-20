@@ -1,6 +1,7 @@
 package tests
 
 import clients.HallClient
+import com.frynet.theatre.hall.HallPlace
 import com.frynet.theatre.hall.HallSize
 import config.FeignConfiguration
 import io.kotest.core.spec.Spec
@@ -33,6 +34,7 @@ class HallTest : StringSpec() {
     private var columns = 0
     private lateinit var size: HallSize
     private lateinit var before: HallSize
+    private lateinit var place: HallPlace
 
     init {
         "Get size for empty hall" {
@@ -40,6 +42,12 @@ class HallTest : StringSpec() {
 
             size.rows shouldBe 0
             size.columns shouldBe 0
+        }
+
+        "Is it contains when hall is empty" {
+            place = HallPlace(Random.nextInt(10), Random.nextInt(10))
+
+            hallClient.contains(place) shouldBe false
         }
 
         "Expand hall" {
@@ -52,6 +60,15 @@ class HallTest : StringSpec() {
 
             size.rows shouldBe rows
             size.columns shouldBe columns
+        }
+
+        "Is it contains when contains" {
+            size = hallClient.getHallSize()
+
+            place.row = Random.nextInt(1, size.rows)
+            place.column = Random.nextInt(1, size.columns)
+
+            hallClient.contains(place) shouldBe true
         }
 
         "Cut rows" {

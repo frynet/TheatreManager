@@ -1,5 +1,6 @@
 package clients
 
+import com.frynet.theatre.hall.HallPlace
 import com.frynet.theatre.hall.HallSize
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.*
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.*
 )
 @RequestMapping("/hall")
 interface HallClient {
+
+    @PostMapping("/contains")
+    fun contains(@RequestBody place: HallPlace): Boolean
 
     @GetMapping("/size")
     fun getHallSize(): HallSize
