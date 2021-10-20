@@ -7,4 +7,6 @@ data class RepertoireInfo(
     var specId: Long,
 
     var date: LocalDate,
+
+    var price: Int,
 )

@@ -45,7 +45,7 @@ class RepertoireService {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, Repertoire.alreadyScheduled(info))
         }
 
-        repertoireRepository.save(RepertoireEntity(id))
+        repertoireRepository.save(RepertoireEntity(id, info.price))
     }
 
     fun cancelSpectacle(info: RepertoireInfo) {

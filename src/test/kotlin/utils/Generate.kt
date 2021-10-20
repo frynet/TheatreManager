@@ -94,7 +94,13 @@ class Generate {
             val result = mutableListOf<RepertoireInfo>()
 
             repeat(count) {
-                result.add(RepertoireInfo(spectacles.random().id, (after + before).random()))
+                result.add(
+                    RepertoireInfo(
+                        specId = spectacles.random().id,
+                        date = (after + before).random(),
+                        price = Random.nextInt(100, 300)
+                    )
+                )
             }
 
             return result

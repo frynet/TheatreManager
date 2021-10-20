@@ -11,4 +11,6 @@ data class RepertoireEntity(
 
     @EmbeddedId
     var id: RepertoireId,
+
+    var price: Int,
 )

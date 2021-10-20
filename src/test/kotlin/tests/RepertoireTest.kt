@@ -71,7 +71,7 @@ class RepertoireTest : StringSpec() {
             specId = Generate.notContained(spectacles.map { it.id })
 
             val ex = shouldThrow<BadRequest> {
-                repertoireClient.scheduleSpectacle(RepertoireInfo(specId, LocalDate.now()))
+                repertoireClient.scheduleSpectacle(RepertoireInfo(specId, LocalDate.now(), Random.nextInt(300)))
             }
 
             ex.status() shouldBe HttpStatus.BAD_REQUEST.value()

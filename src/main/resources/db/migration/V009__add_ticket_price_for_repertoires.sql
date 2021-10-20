@@ -1,0 +1,2 @@
+ALTER TABLE repertoires
+    ADD COLUMN price INT NOT NULL DEFAULT 0;
