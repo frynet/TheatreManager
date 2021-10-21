@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration
         SpecRoleActorClient::class,
         RepertoireClient::class,
         HallClient::class,
+        TicketClient::class,
     ]
 )
 @Configuration

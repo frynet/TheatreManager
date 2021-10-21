@@ -21,14 +21,18 @@ class RepertoireService {
     @Autowired
     private lateinit var spectacleService: SpectacleService
 
+    fun checkInterval(interval: RepertoireDateInterval) {
+        if (interval.begin.isAfter(interval.end)) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Repertoire.invalidDateInterval(interval))
+        }
+    }
+
     fun getSpectaclesByDate(date: RepertoireDate): List<RepertoireInfo> {
         return repertoireRepository.findByDate(date.date).map { repertoireConverter.toInfo(it) }
     }
 
     fun getSpectaclesByInterval(interval: RepertoireDateInterval): Map<LocalDate, List<RepertoireInfo>> {
-        if (interval.begin.isAfter(interval.end)) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, Repertoire.invalidDateInterval(interval))
-        }
+        checkInterval(interval)
 
         return repertoireRepository
             .findByInterval(interval.begin, interval.end)

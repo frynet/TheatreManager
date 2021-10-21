@@ -1,9 +1,12 @@
 package utils
 
 import com.frynet.theatre.actors.ActorCreate
+import com.frynet.theatre.hall.HallPlace
+import com.frynet.theatre.hall.HallSize
 import com.frynet.theatre.repertoires.RepertoireInfo
 import com.frynet.theatre.roles.RoleCreate
 import com.frynet.theatre.roles.RoleInfo
+import com.frynet.theatre.sale_tickets.TicketCreate
 import com.frynet.theatre.spectacles.SpectacleCreate
 import com.frynet.theatre.spectacles.SpectacleInfo
 import java.time.LocalDate
@@ -77,6 +80,30 @@ class Generate {
             return result
         }
 
+        fun notContainedDate(list: List<LocalDate>): LocalDate {
+            var result = list.first()
+
+            while (list.contains(result)) {
+                result = if (Random.nextBoolean()) {
+                    result.plusDays(Random.nextLong(15))
+                } else {
+                    result.minusDays(Random.nextLong(20))
+                }
+            }
+
+            return result
+        }
+
+        fun containedPlace(size: HallSize) = HallPlace(
+            row = Random.nextInt(1, size.rows),
+            column = Random.nextInt(1, size.columns)
+        )
+
+        fun notContainedPlace(size: HallSize) = HallPlace(
+            row = Random.nextInt(size.rows + 1, size.rows + 20),
+            column = Random.nextInt(size.columns + 1, size.columns + 20)
+        )
+
         fun notContainedRoles(roles: List<RoleInfo>, count: Int): List<RoleInfo> {
             val result = mutableListOf<RoleInfo>()
             val rolesIds = notContained(roles.map { it.id }, count)
@@ -89,18 +116,52 @@ class Generate {
         }
 
         fun repertoires(spectacles: List<SpectacleInfo>, count: Int): List<RepertoireInfo> {
+            data class PrimaryKey(
+                var specId: Long,
+
+                var date: LocalDate
+            )
+
+            var pk: PrimaryKey
+            val pkList = mutableListOf<PrimaryKey>()
             val after = datesAfter(LocalDate.now(), count)
             val before = datesBefore(LocalDate.now(), count)
             val result = mutableListOf<RepertoireInfo>()
 
             repeat(count) {
-                result.add(
-                    RepertoireInfo(
-                        specId = spectacles.random().id,
-                        date = (after + before).random(),
-                        price = Random.nextInt(100, 300)
+                pk = PrimaryKey(spectacles.random().id, (after + before).random())
+
+                if (!pkList.contains(pk)) {
+
+                    pkList.add(pk)
+
+                    result.add(
+                        RepertoireInfo(
+                            specId = pk.specId,
+                            date = pk.date,
+                            price = Random.nextInt(100, 300)
+                        )
                     )
-                )
+                }
+            }
+
+            return result
+        }
+
+        fun tickets(repertoires: List<RepertoireInfo>, hallSize: HallSize, count: Int): List<TicketCreate> {
+            var place: HallPlace
+            var ticket: TicketCreate
+            var rep: RepertoireInfo
+            val result = mutableListOf<TicketCreate>()
+
+            repeat(count) {
+                rep = repertoires.random()
+                place = containedPlace(hallSize)
+                ticket = TicketCreate(rep.specId, rep.date, place)
+
+                if (!result.contains(ticket)) {
+                    result.add(ticket)
+                }
             }
 
             return result

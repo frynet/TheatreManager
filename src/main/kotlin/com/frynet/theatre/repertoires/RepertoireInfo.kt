@@ -8,5 +8,5 @@ data class RepertoireInfo(
 
     var date: LocalDate,
 
-    var price: Int,
+    var price: Int = 0,
 )
