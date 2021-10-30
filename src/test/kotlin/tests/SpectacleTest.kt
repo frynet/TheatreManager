@@ -6,7 +6,7 @@ import com.frynet.theatre.spectacles.SpectacleConverter
 import com.frynet.theatre.spectacles.SpectacleCreate
 import com.frynet.theatre.spectacles.SpectacleInfo
 import config.FeignConfiguration
-import feign.FeignException
+import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.Spec
@@ -51,7 +51,7 @@ class SpectacleTest : StringSpec() {
         "Try to get non-exist spectacle" {
             val id = 0L
 
-            val ex = shouldThrow<FeignException.BadRequest> {
+            val ex = shouldThrow<BadRequest> {
                 spectacleClient.getSpectacleById(id)
             }
 

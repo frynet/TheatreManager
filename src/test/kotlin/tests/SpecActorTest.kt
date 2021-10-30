@@ -7,7 +7,7 @@ import com.frynet.theatre.actors.ActorInfo
 import com.frynet.theatre.errors.Spectacle
 import com.frynet.theatre.spectacles.SpectacleInfo
 import config.FeignConfiguration
-import feign.FeignException
+import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.Spec
@@ -65,7 +65,7 @@ class SpecActorTest : StringSpec() {
         "Try to add actor when spectacle doesn't exists" {
             val specId = Generate.notContained(spectacles.map { it.id })
 
-            val ex = shouldThrow<FeignException.BadRequest> {
+            val ex = shouldThrow<BadRequest> {
                 specActorClient.addActorsToSpec(specId, listOf(actors.random().id))
             }
 

@@ -6,7 +6,7 @@ import com.frynet.theatre.roles.RoleConverter
 import com.frynet.theatre.roles.RoleCreate
 import com.frynet.theatre.roles.RoleInfo
 import config.FeignConfiguration
-import feign.FeignException
+import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.Spec
@@ -50,7 +50,7 @@ class RoleTest : StringSpec() {
         "Try to get non-exist role" {
             val id = 0L
 
-            val ex = shouldThrow<FeignException.BadRequest> {
+            val ex = shouldThrow<BadRequest> {
                 roleClient.getRoleById(id)
             }
 

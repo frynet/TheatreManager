@@ -6,7 +6,7 @@ import com.frynet.theatre.actors.ActorCreate
 import com.frynet.theatre.actors.ActorInfo
 import com.frynet.theatre.errors.Actor
 import config.FeignConfiguration
-import feign.FeignException
+import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.Spec
@@ -51,7 +51,7 @@ class ActorTest : StringSpec() {
         "Try to get non-exist actor" {
             val id = 0L
 
-            val ex = shouldThrow<FeignException.BadRequest> {
+            val ex = shouldThrow<BadRequest> {
                 actorClient.getActorById(id)
             }
 

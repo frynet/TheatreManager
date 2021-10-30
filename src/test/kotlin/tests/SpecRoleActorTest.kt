@@ -8,7 +8,7 @@ import com.frynet.theatre.roles.RoleInfo
 import com.frynet.theatre.spectacles.SpectacleInfo
 import com.frynet.theatre.spectacles_roles.SpecRoleInfo
 import config.FeignConfiguration
-import feign.FeignException
+import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.Spec
@@ -90,7 +90,7 @@ class SpecRoleActorTest : StringSpec() {
             specId = Generate.notContained(spectacles.map { it.id })
             actorId = actors.random().id
 
-            val ex = shouldThrow<FeignException.BadRequest> {
+            val ex = shouldThrow<BadRequest> {
                 specRoleActorClient.setRolesForActor(specId, actorId, listOf(roles.random()))
             }
 
@@ -102,7 +102,7 @@ class SpecRoleActorTest : StringSpec() {
             specId = spectacles.random().id
             actorId = Generate.notContained(actors.map { it.id })
 
-            val ex = shouldThrow<FeignException.BadRequest> {
+            val ex = shouldThrow<BadRequest> {
                 specRoleActorClient.setRolesForActor(specId, actorId, listOf(roles.random()))
             }
 

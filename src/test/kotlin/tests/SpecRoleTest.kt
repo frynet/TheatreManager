@@ -11,7 +11,7 @@ import com.frynet.theatre.spectacles.SpectacleInfo
 import com.frynet.theatre.spectacles_roles.SpecRoleId
 import com.frynet.theatre.spectacles_roles.SpecRoleInfo
 import config.FeignConfiguration
-import feign.FeignException
+import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.Spec
@@ -69,7 +69,7 @@ class SpecRoleTest : StringSpec() {
         "Try to add role when spectacle doesn't exists" {
             val specId = Generate.notContained(spectacles.map { it.id })
 
-            val ex = shouldThrow<FeignException.BadRequest> {
+            val ex = shouldThrow<BadRequest> {
                 specRoleClient.addRoleToSpec(specId, SpecRoleInfo(roles.random().id, true))
             }
 
@@ -82,7 +82,7 @@ class SpecRoleTest : StringSpec() {
             val roleId = Generate.notContained(roles.map { it.id })
             val info = SpecRoleInfo(roleId, true)
 
-            val ex = shouldThrow<FeignException.BadRequest> {
+            val ex = shouldThrow<BadRequest> {
                 specRoleClient.addRoleToSpec(s.id, info)
             }
 
@@ -93,7 +93,7 @@ class SpecRoleTest : StringSpec() {
         "Try to get non-exists record" {
             val id = SpecRoleId(specId, 0L)
 
-            val ex = shouldThrow<FeignException.BadRequest> {
+            val ex = shouldThrow<BadRequest> {
                 specRoleClient.getRoleInfo(id.spectacle, id.role)
             }
 
