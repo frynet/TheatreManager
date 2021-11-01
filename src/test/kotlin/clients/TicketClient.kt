@@ -1,9 +1,9 @@
 package clients
 
-import com.frynet.theatre.repertoires.RepertoireDate
-import com.frynet.theatre.repertoires.RepertoireDateInterval
-import com.frynet.theatre.sale_tickets.TicketCreate
-import com.frynet.theatre.sale_tickets.TicketInfo
+import com.frynet.theatre.data.repertoires.RepertoireDate
+import com.frynet.theatre.data.repertoires.RepertoireDateInterval
+import com.frynet.theatre.data.sale_tickets.TicketCreate
+import com.frynet.theatre.data.sale_tickets.TicketInfo
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate

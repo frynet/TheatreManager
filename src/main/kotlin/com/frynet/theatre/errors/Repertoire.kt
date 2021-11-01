@@ -1,7 +1,7 @@
 package com.frynet.theatre.errors
 
-import com.frynet.theatre.repertoires.RepertoireDateInterval
-import com.frynet.theatre.repertoires.RepertoireInfo
+import com.frynet.theatre.data.repertoires.RepertoireDateInterval
+import com.frynet.theatre.data.repertoires.RepertoireInfo
 
 object Repertoire {
 

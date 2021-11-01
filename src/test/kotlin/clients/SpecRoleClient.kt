@@ -1,6 +1,6 @@
 package clients
 
-import com.frynet.theatre.spectacles_roles.SpecRoleInfo
+import com.frynet.theatre.data.spectacles_roles.SpecRoleInfo
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.*
 

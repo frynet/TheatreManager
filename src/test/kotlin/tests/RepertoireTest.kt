@@ -2,12 +2,12 @@ package tests
 
 import clients.RepertoireClient
 import clients.SpectacleClient
+import com.frynet.theatre.data.repertoires.RepertoireDate
+import com.frynet.theatre.data.repertoires.RepertoireDateInterval
+import com.frynet.theatre.data.repertoires.RepertoireInfo
+import com.frynet.theatre.data.spectacles.SpectacleInfo
 import com.frynet.theatre.errors.Repertoire
 import com.frynet.theatre.errors.Spectacle
-import com.frynet.theatre.repertoires.RepertoireDate
-import com.frynet.theatre.repertoires.RepertoireDateInterval
-import com.frynet.theatre.repertoires.RepertoireInfo
-import com.frynet.theatre.spectacles.SpectacleInfo
 import config.FeignConfiguration
 import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny

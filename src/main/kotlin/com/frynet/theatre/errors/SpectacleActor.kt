@@ -1,6 +1,6 @@
 package com.frynet.theatre.errors
 
-import com.frynet.theatre.spectacles_actors.SpecActorId
+import com.frynet.theatre.data.spectacles_actors.SpecActorId
 
 object SpectacleActor {
 

@@ -1,10 +1,10 @@
 package tests
 
 import clients.SpectacleClient
+import com.frynet.theatre.data.spectacles.SpectacleConverter
+import com.frynet.theatre.data.spectacles.SpectacleCreate
+import com.frynet.theatre.data.spectacles.SpectacleInfo
 import com.frynet.theatre.errors.Spectacle
-import com.frynet.theatre.spectacles.SpectacleConverter
-import com.frynet.theatre.spectacles.SpectacleCreate
-import com.frynet.theatre.spectacles.SpectacleInfo
 import config.FeignConfiguration
 import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny

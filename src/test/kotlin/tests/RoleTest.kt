@@ -1,10 +1,10 @@
 package tests
 
 import clients.RoleClient
+import com.frynet.theatre.data.roles.RoleConverter
+import com.frynet.theatre.data.roles.RoleCreate
+import com.frynet.theatre.data.roles.RoleInfo
 import com.frynet.theatre.errors.Role
-import com.frynet.theatre.roles.RoleConverter
-import com.frynet.theatre.roles.RoleCreate
-import com.frynet.theatre.roles.RoleInfo
 import config.FeignConfiguration
 import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny

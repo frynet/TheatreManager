@@ -1,7 +1,7 @@
 package clients
 
-import com.frynet.theatre.spectacles.SpectacleCreate
-import com.frynet.theatre.spectacles.SpectacleInfo
+import com.frynet.theatre.data.spectacles.SpectacleCreate
+import com.frynet.theatre.data.spectacles.SpectacleInfo
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.*
 

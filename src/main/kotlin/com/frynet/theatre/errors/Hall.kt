@@ -1,6 +1,6 @@
 package com.frynet.theatre.errors
 
-import com.frynet.theatre.hall.HallPlace
+import com.frynet.theatre.data.hall.HallPlace
 
 object Hall {
 

@@ -1,14 +1,14 @@
 package utils
 
-import com.frynet.theatre.actors.ActorCreate
-import com.frynet.theatre.hall.HallPlace
-import com.frynet.theatre.hall.HallSize
-import com.frynet.theatre.repertoires.RepertoireInfo
-import com.frynet.theatre.roles.RoleCreate
-import com.frynet.theatre.roles.RoleInfo
-import com.frynet.theatre.sale_tickets.TicketCreate
-import com.frynet.theatre.spectacles.SpectacleCreate
-import com.frynet.theatre.spectacles.SpectacleInfo
+import com.frynet.theatre.data.actors.ActorCreate
+import com.frynet.theatre.data.hall.HallPlace
+import com.frynet.theatre.data.hall.HallSize
+import com.frynet.theatre.data.repertoires.RepertoireInfo
+import com.frynet.theatre.data.roles.RoleCreate
+import com.frynet.theatre.data.roles.RoleInfo
+import com.frynet.theatre.data.sale_tickets.TicketCreate
+import com.frynet.theatre.data.spectacles.SpectacleCreate
+import com.frynet.theatre.data.spectacles.SpectacleInfo
 import java.time.LocalDate
 import kotlin.random.Random
 

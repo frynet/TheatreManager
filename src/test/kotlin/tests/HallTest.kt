@@ -1,8 +1,8 @@
 package tests
 
 import clients.HallClient
-import com.frynet.theatre.hall.HallPlace
-import com.frynet.theatre.hall.HallSize
+import com.frynet.theatre.data.hall.HallPlace
+import com.frynet.theatre.data.hall.HallSize
 import config.FeignConfiguration
 import io.kotest.core.spec.Spec
 import io.kotest.core.spec.style.StringSpec

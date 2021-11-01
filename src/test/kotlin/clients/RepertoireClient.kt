@@ -1,8 +1,8 @@
 package clients
 
-import com.frynet.theatre.repertoires.RepertoireDate
-import com.frynet.theatre.repertoires.RepertoireDateInterval
-import com.frynet.theatre.repertoires.RepertoireInfo
+import com.frynet.theatre.data.repertoires.RepertoireDate
+import com.frynet.theatre.data.repertoires.RepertoireDateInterval
+import com.frynet.theatre.data.repertoires.RepertoireInfo
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping

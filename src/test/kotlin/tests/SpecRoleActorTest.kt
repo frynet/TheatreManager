@@ -1,12 +1,12 @@
 package tests
 
 import clients.*
-import com.frynet.theatre.actors.ActorInfo
+import com.frynet.theatre.data.actors.ActorInfo
+import com.frynet.theatre.data.roles.RoleInfo
+import com.frynet.theatre.data.spectacles.SpectacleInfo
+import com.frynet.theatre.data.spectacles_roles.SpecRoleInfo
 import com.frynet.theatre.errors.Actor
 import com.frynet.theatre.errors.Spectacle
-import com.frynet.theatre.roles.RoleInfo
-import com.frynet.theatre.spectacles.SpectacleInfo
-import com.frynet.theatre.spectacles_roles.SpecRoleInfo
 import config.FeignConfiguration
 import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny

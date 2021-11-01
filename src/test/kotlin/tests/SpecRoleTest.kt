@@ -3,13 +3,13 @@ package tests
 import clients.RoleClient
 import clients.SpecRoleClient
 import clients.SpectacleClient
+import com.frynet.theatre.data.roles.RoleInfo
+import com.frynet.theatre.data.spectacles.SpectacleInfo
+import com.frynet.theatre.data.spectacles_roles.SpecRoleId
+import com.frynet.theatre.data.spectacles_roles.SpecRoleInfo
 import com.frynet.theatre.errors.Role
 import com.frynet.theatre.errors.Spectacle
 import com.frynet.theatre.errors.SpectacleRole
-import com.frynet.theatre.roles.RoleInfo
-import com.frynet.theatre.spectacles.SpectacleInfo
-import com.frynet.theatre.spectacles_roles.SpecRoleId
-import com.frynet.theatre.spectacles_roles.SpecRoleInfo
 import config.FeignConfiguration
 import feign.FeignException.BadRequest
 import io.kotest.assertions.throwables.shouldNotThrowAny

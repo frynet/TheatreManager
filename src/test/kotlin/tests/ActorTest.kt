@@ -1,9 +1,9 @@
 package tests
 
 import clients.ActorClient
-import com.frynet.theatre.actors.ActorConverter
-import com.frynet.theatre.actors.ActorCreate
-import com.frynet.theatre.actors.ActorInfo
+import com.frynet.theatre.data.actors.ActorConverter
+import com.frynet.theatre.data.actors.ActorCreate
+import com.frynet.theatre.data.actors.ActorInfo
 import com.frynet.theatre.errors.Actor
 import config.FeignConfiguration
 import feign.FeignException.BadRequest
